@@ -6,6 +6,8 @@ import com.example.employee_management.repository.EmployeeRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    @Cacheable("employees")
     public List<Employee> findAll() {
         return employeeRepository.findAll();
     }
@@ -29,11 +32,13 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
+    @CacheEvict(value = "employees", allEntries = true)
     public Employee save(Employee employee) {
         log.info("Saving employee: {}", employee);
         return employeeRepository.save(employee);
     }
 
+    @CacheEvict(value = "employees", allEntries = true)
     public void deleteById(Long id) {
         log.info("Deleting employee with id: {}", id);
         employeeRepository.deleteById(id);
@@ -45,5 +50,9 @@ public class EmployeeService {
 
     public List<Employee> findByDepartmentId(Long departmentId) {
         return employeeRepository.findByDepartmentId(departmentId);
+    }
+
+    public Long count() {
+        return employeeRepository.count();
     }
 }
