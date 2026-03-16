@@ -1,6 +1,7 @@
 package com.example.employee_management.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "employees")
@@ -8,13 +9,21 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email is invalid")
     private String email;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
+
+    public Employee() {}
 
     public Long getId() {
         return id;

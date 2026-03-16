@@ -1,5 +1,6 @@
 package com.example.employee_management.service;
 
+import com.example.employee_management.exception.EmployeeNotFoundException;
 import com.example.employee_management.model.Employee;
 import com.example.employee_management.repository.EmployeeRepository;
 
@@ -20,8 +21,9 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> findById(Long id) {
-        return employeeRepository.findById(id);
+    public Employee findById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     public Employee save(Employee employee) {

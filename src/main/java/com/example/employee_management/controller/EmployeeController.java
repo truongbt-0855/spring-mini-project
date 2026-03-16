@@ -2,6 +2,7 @@ package com.example.employee_management.controller;
 
 import com.example.employee_management.model.Employee;
 import com.example.employee_management.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +23,13 @@ public class EmployeeController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee employee) {
         return ResponseEntity.status(201).body(employeeService.save(employee));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getById(@PathVariable Long id) {
-        return employeeService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(employeeService.findById(id));
     }
 
     @DeleteMapping("/{id}")
