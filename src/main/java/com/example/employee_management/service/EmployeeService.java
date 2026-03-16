@@ -4,6 +4,8 @@ import com.example.employee_management.exception.EmployeeNotFoundException;
 import com.example.employee_management.model.Employee;
 import com.example.employee_management.repository.EmployeeRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -27,10 +30,12 @@ public class EmployeeService {
     }
 
     public Employee save(Employee employee) {
+        log.info("Saving employee: {}", employee);
         return employeeRepository.save(employee);
     }
 
     public void deleteById(Long id) {
+        log.info("Deleting employee with id: {}", id);
         employeeRepository.deleteById(id);
     }
 
