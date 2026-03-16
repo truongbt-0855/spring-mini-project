@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/employees/**").permitAll()
                         // USER chỉ xem
                         .requestMatchers(HttpMethod.GET, "/api/employees/**").hasAnyRole("USER", "ADMIN")
                         // ADMIN mới được CRUD

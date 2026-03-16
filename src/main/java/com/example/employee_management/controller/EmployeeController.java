@@ -1,5 +1,6 @@
 package com.example.employee_management.controller;
 
+import com.example.employee_management.dto.DepartmentStats;
 import com.example.employee_management.model.Employee;
 import com.example.employee_management.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -52,4 +53,10 @@ public class EmployeeController {
     public ResponseEntity<Long> countEmployees() {
         return ResponseEntity.ok(employeeService.count());
     }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<List<DepartmentStats>> getStatistics() {
+        return ResponseEntity.ok(employeeService.getStatsByDepartment());
+    }
+
 }

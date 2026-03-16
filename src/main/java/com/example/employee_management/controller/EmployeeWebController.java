@@ -43,4 +43,12 @@ public class EmployeeWebController {
         employeeService.save(employee);
         return "redirect:/employees/list";
     }
+
+    @GetMapping("/statistics")
+    public String statistics(Model model) {
+        model.addAttribute("stats", employeeService.getStatsByDepartment());
+        model.addAttribute("total", employeeService.count());
+        return "employees/statistics";
+    }
+
 }

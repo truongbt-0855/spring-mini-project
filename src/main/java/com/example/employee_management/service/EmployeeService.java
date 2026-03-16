@@ -1,5 +1,6 @@
 package com.example.employee_management.service;
 
+import com.example.employee_management.dto.DepartmentStats;
 import com.example.employee_management.exception.EmployeeNotFoundException;
 import com.example.employee_management.model.Employee;
 import com.example.employee_management.repository.EmployeeRepository;
@@ -55,4 +56,12 @@ public class EmployeeService {
     public Long count() {
         return employeeRepository.count();
     }
+
+    public List<DepartmentStats> getStatsByDepartment() {
+        return employeeRepository.countByDepartment()
+                .stream()
+                .map(row -> new DepartmentStats((String) row[0], (Long) row[1]))
+                .toList();
+    }
+
 }
